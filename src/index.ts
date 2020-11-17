@@ -10,7 +10,7 @@ app.use(express.urlencoded({ extended: true}))
 
 app.use('/users', UserRoute)
 
-createConnection().then(async  => {
+createConnection().then(()  => {
 
    app.listen(5000, () => console.log('Server up at http://localhost:5000'))
 
