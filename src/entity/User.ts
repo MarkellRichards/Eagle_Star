@@ -8,6 +8,12 @@ import {
   BeforeInsert,
 } from "typeorm";
 
+export enum UserRole {
+  ADMIN = "admin",
+  PROPERTY_MANAGER = "property_manager",
+  USER = "user",
+}
+
 @Entity({ name: "users" })
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
@@ -29,7 +35,6 @@ export class User extends BaseEntity {
   age: number;
 
   @Column({
-    unique: true,
     nullable: false,
   })
   email: string;
@@ -37,10 +42,15 @@ export class User extends BaseEntity {
   @Column()
   password: string;
 
-  @Column({
-    unique: true,
-  })
+  @Column()
   username: string;
+
+  @Column({
+    type: "enum",
+    enum: UserRole,
+    default: UserRole.USER,
+  })
+  role: UserRole;
 
   @CreateDateColumn()
   createdAt: Date;

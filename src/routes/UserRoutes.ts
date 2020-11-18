@@ -1,10 +1,11 @@
-import express from 'express'
-import { CreateUser, getUserById, getUsers } from '../controllers'
+import express from "express";
+import { getUserById, getUsers } from "../controllers";
+import { Authenticate, verifyIsAdmin } from "../middleware";
 
-const router = express.Router()
+const router = express.Router();
 
-router.get('/allUsers', getUsers)
-router.get('/:id', getUserById)
-router.post('/signup', CreateUser)
+router.use(Authenticate);
+router.get("/allUsers", verifyIsAdmin, getUsers);
+router.get("/:id", getUserById);
 
-export { router as UserRoute}
+export { router as UserRoute };
